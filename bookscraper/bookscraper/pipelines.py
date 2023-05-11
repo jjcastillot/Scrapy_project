@@ -61,3 +61,98 @@ class BookscraperPipeline:
             adapter['stars'] = 5
 
         return item
+    
+import psycopg2
+
+class SaveToPostgresPipeline:
+
+    def __init__(self):
+        ## Connection Details
+        hostname = 'localhost'
+        username = 'postgres'
+        password = '12345' # your password
+        database = 'books_to_scrape'
+
+        ## Create/Connect to database
+        self.connection = psycopg2.connect(host=hostname, user=username, password=password, dbname=database)
+        
+        ## Create cursor, used to execute commands
+        self.cur = self.connection.cursor()
+        
+        ## Create books table if none exists
+        self.cur.execute("""
+        CREATE TABLE IF NOT EXISTS books(
+            id serial PRIMARY KEY, 
+            url VARCHAR(255),
+            title text,
+            upc VARCHAR(255),
+            product_type VARCHAR(255),
+            price_excl_tax DECIMAL,
+            price_incl_tax DECIMAL,
+            tax DECIMAL,
+            price DECIMAL,
+            availability INTEGER,
+            num_reviews INTEGER,
+            stars INTEGER,
+            category VARCHAR(255),
+            description text
+        )
+        """)
+
+    def process_item(self, item, spider):
+
+        ## Define insert statement
+        self.cur.execute(""" insert into books (
+            url, 
+            title, 
+            upc, 
+            product_type, 
+            price_excl_tax,
+            price_incl_tax,
+            tax,
+            price,
+            availability,
+            num_reviews,
+            stars,
+            category,
+            description
+            ) values (
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s,
+                %s
+                )""", (
+            item["url"],
+            item["title"],
+            item["upc"],
+            item["product_type"],
+            item["price_excl_tax"],
+            item["price_incl_tax"],
+            item["tax"],
+            item["price"],
+            item["availability"],
+            item["num_reviews"],
+            item["stars"],
+            item["category"],
+            str(item["description"])
+        ))
+
+        ## Execute insert of data into database
+        self.connection.commit()
+        return item
+
+    def close_spider(self, spider):
+
+        ## Close cursor & connection to database 
+        self.cur.close()
+        self.connection.close()
+
