@@ -8,6 +8,12 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+# Uses dotenv to protect scrapeops api key
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+# Scrapy settings for bookscraper project
 BOT_NAME = "bookscraper"
 
 SPIDER_MODULES = ["bookscraper.spiders"]
@@ -48,7 +54,7 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-SCRAPEOPS_API_KEY = '9ee8e8ca-60a0-4fd2-8514-a4a7a7e3194a'
+SCRAPEOPS_API_KEY = os.getenv('my_scrapeops_key')
 SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
 SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
 SCRAPEOPS_NUM_RESULTS = 5
