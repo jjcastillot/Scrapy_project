@@ -1,0 +1,14 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Postgres Local",
+            "database": "books_to_scrape",
+            "username": "postgres",
+            "password": "12345"
+        }
+    ]
+}

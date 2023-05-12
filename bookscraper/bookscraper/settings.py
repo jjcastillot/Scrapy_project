@@ -1,6 +1,7 @@
 # Scrapy settings for bookscraper project
 #
-# For simplicity, this file contains only settings considered important or
+# For simplicity, this file contain
+# s only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
 #     https://docs.scrapy.org/en/latest/topics/settings.html
@@ -47,9 +48,15 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://docs.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    "bookscraper.middlewares.BookscraperSpiderMiddleware": 543,
-#}
+SCRAPEOPS_API_KEY = '9ee8e8ca-60a0-4fd2-8514-a4a7a7e3194a'
+SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agents'
+SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
+SCRAPEOPS_NUM_RESULTS = 5
+
+DOWNLOADER_MIDDLEWARES = {
+    #'bookscraper.middlewares.ScrapeOpsFakeUserAgentMiddleware': 500,
+    'bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400
+}
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
