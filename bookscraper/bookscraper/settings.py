@@ -8,7 +8,7 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-from creds import my_scrapeops_key
+from .creds import my_scrapeops_key
 
 # Scrapy settings for bookscraper project
 BOT_NAME = "bookscraper"
@@ -56,9 +56,19 @@ SCRAPEOPS_FAKE_USER_AGENT_ENDPOINT = 'https://headers.scrapeops.io/v1/user-agent
 SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
 SCRAPEOPS_NUM_RESULTS = 5
 
+## Insert Your List of Proxies Here. Obtained from https://www.freeproxylists.net/
+ROTATING_PROXY_LIST = [
+    '138.68.60.8:3128',
+    '47.88.29.108:1080',
+    '198.199.86.11:8080',
+    '45.74.86.150:8080'
+]
+
 DOWNLOADER_MIDDLEWARES = {
     #'bookscraper.middlewares.ScrapeOpsFakeUserAgentMiddleware': 500,
-    'bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400
+    'bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400,
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
 
 # Enable or disable downloader middlewares
