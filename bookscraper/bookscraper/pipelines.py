@@ -63,6 +63,7 @@ class BookscraperPipeline:
         return item
     
 import psycopg2
+from .creds import psql_key
 
 class SaveToPostgresPipeline:
 
@@ -70,7 +71,7 @@ class SaveToPostgresPipeline:
         ## Connection Details
         hostname = 'localhost'
         username = 'postgres'
-        password = '12345' # your password
+        password = psql_key # your password
         database = 'books_to_scrape'
 
         ## Create/Connect to database
@@ -79,7 +80,8 @@ class SaveToPostgresPipeline:
         ## Create cursor, used to execute commands
         self.cur = self.connection.cursor()
         
-        ## Create books table if none exists
+        ## Delete older table and create new one
+        self.cur.execute("""DROP TABLE IF EXISTS books;""")
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS books(
             id serial PRIMARY KEY, 

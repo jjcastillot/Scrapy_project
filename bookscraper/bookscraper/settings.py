@@ -24,7 +24,7 @@ FEEDS = {
 #USER_AGENT = "bookscraper (+http://www.yourdomain.com)"
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -57,22 +57,19 @@ SCRAPEOPS_FAKE_BROWSER_HEADER_ENABLED = True
 SCRAPEOPS_NUM_RESULTS = 5
 
 ## Insert Your List of Proxies Here. Obtained from https://www.freeproxylists.net/
-ROTATING_PROXY_LIST = [
-    '138.68.60.8:3128',
-    '47.88.29.108:1080',
-    '198.199.86.11:8080',
-    '45.74.86.150:8080',
-    '45.5.147.23:8090',
-    '170.79.12.75:9090',
-    '172.104.94.119:8080',
-    '139.162.78.109:8080',
-]
+# ROTATING_PROXY_LIST = [
+#     '190.108.87.249:999',
+#     '14.241.110.154:8080',
+#     '103.176.94.202:8888',
+#     '103.166.10.5:8181',
+#     '180.74.233.220:8080',
+# ]
 
 DOWNLOADER_MIDDLEWARES = {
-    #'bookscraper.middlewares.ScrapeOpsFakeUserAgentMiddleware': 500,
+    'bookscraper.middlewares.BookscraperDownloaderMiddleware': 543,
     'bookscraper.middlewares.ScrapeOpsFakeBrowserHeaderAgentMiddleware': 400,
-    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    #'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    #'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 }
 
 # Enable or disable downloader middlewares
@@ -116,6 +113,6 @@ ITEM_PIPELINES = {
 #HTTPCACHE_STORAGE = "scrapy.extensions.httpcache.FilesystemCacheStorage"
 
 # Set settings whose default value is deprecated to a future-proof value
-REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
-TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
-FEED_EXPORT_ENCODING = "utf-8"
+# REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
+# TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
+# FEED_EXPORT_ENCODING = "utf-8"
