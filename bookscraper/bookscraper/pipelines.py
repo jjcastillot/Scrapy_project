@@ -63,14 +63,14 @@ class BookscraperPipeline:
         return item
     
 import psycopg2
-from .creds import psql_key
+from .creds import psql_host, psql_user,psql_key
 
 class SaveToPostgresPipeline:
 
     def __init__(self):
         ## Connection Details
-        hostname = 'localhost'
-        username = 'postgres'
+        hostname = psql_host
+        username = psql_user
         password = psql_key # your password
         database = 'books_to_scrape'
 
